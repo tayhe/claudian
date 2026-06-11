@@ -66,13 +66,13 @@ export class MimocodeAuxQueryRunner implements AuxQueryRunner {
     await this.ensureReady(cwd, config.systemPrompt);
 
     if (!this.connection) {
-      throw new Error('OpenCode runtime is not ready.');
+      throw new Error('MimoCode runtime is not ready.');
     }
 
     if (!this.sessionId) {
       const sessionId = await this.createSession(cwd);
       if (!sessionId) {
-        throw new Error('Failed to create an OpenCode session.');
+        throw new Error('Failed to create an MimoCode session.');
       }
     }
 
@@ -136,7 +136,7 @@ export class MimocodeAuxQueryRunner implements AuxQueryRunner {
 
       return accumulatedText;
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'OpenCode request failed';
+      const message = error instanceof Error ? error.message : 'MimoCode request failed';
       const stderr = this.process?.getStderrSnapshot();
       throw new Error(
         stderr ? `${message}\n\n${stderr}` : message,
@@ -373,7 +373,7 @@ export class MimocodeAuxQueryRunner implements AuxQueryRunner {
       return resolvedPath;
     }
 
-    throw new Error('OpenCode aux read access is limited to the current workspace.');
+    throw new Error('MimoCode aux read access is limited to the current workspace.');
   }
 }
 
@@ -382,7 +382,7 @@ function buildMimocodeAuxAgentConfig(profile: MimocodeAuxAgentProfile): Mimocode
   if (profile === 'readonly') {
     return {
       definition: {
-        description: 'Internal Claudian read-only agent for OpenCode auxiliary tasks.',
+        description: 'Internal Claudian read-only agent for MimoCode auxiliary tasks.',
         mode: 'primary',
         permission: {
           '*': 'deny',
@@ -402,7 +402,7 @@ function buildMimocodeAuxAgentConfig(profile: MimocodeAuxAgentProfile): Mimocode
 
   return {
     definition: {
-      description: 'Internal Claudian no-tool agent for OpenCode auxiliary tasks.',
+      description: 'Internal Claudian no-tool agent for MimoCode auxiliary tasks.',
       mode: 'primary',
       permission: {
         '*': 'deny',

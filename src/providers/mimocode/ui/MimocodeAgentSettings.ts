@@ -66,7 +66,7 @@ class MimocodeAgentModal extends Modal {
   }
 
   onOpen() {
-    this.setTitle(this.existing ? 'Edit OpenCode Subagent' : 'Add OpenCode Subagent');
+    this.setTitle(this.existing ? 'Edit MimoCode Subagent' : 'Add MimoCode Subagent');
     this.modalEl.addClass('claudian-sp-modal');
 
     const { contentEl } = this;
@@ -87,7 +87,7 @@ class MimocodeAgentModal extends Modal {
 
     new Setting(contentEl)
       .setName('Name')
-      .setDesc('OpenCode agent name. Use slash-separated segments for nested agents.')
+      .setDesc('MimoCode agent name. Use slash-separated segments for nested agents.')
       .addText((text) => {
         nameInput = text.inputEl;
         text.setValue(this.existing?.name ?? '')
@@ -96,7 +96,7 @@ class MimocodeAgentModal extends Modal {
 
     new Setting(contentEl)
       .setName('Description')
-      .setDesc('When OpenCode should use this subagent')
+      .setDesc('When MimoCode should use this subagent')
       .addText((text) => {
         descriptionInput = text.inputEl;
         text.setValue(this.existing?.description ?? '')
@@ -384,7 +384,7 @@ export class MimocodeAgentSettings {
     const visibleAgents = this.agents.filter((agent) => agent.mode === 'subagent');
 
     const headerEl = this.containerEl.createDiv({ cls: 'claudian-sp-header' });
-    headerEl.createSpan({ text: 'OpenCode Subagents', cls: 'claudian-sp-label' });
+    headerEl.createSpan({ text: 'MimoCode Subagents', cls: 'claudian-sp-label' });
 
     const actionsEl = headerEl.createDiv({ cls: 'claudian-sp-header-actions' });
 
@@ -404,7 +404,7 @@ export class MimocodeAgentSettings {
 
     if (visibleAgents.length === 0) {
       const emptyEl = this.containerEl.createDiv({ cls: 'claudian-sp-empty-state' });
-      emptyEl.setText('No OpenCode subagents in vault. Click + to create one.');
+      emptyEl.setText('No MimoCode subagents in vault. Click + to create one.');
       return;
     }
 

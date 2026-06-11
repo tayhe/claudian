@@ -50,7 +50,7 @@ export class MimocodeConversationHistoryService implements ProviderConversationH
     _conversation: Conversation,
     _vaultPath: string | null,
   ): Promise<void> {
-    // Never mutate OpenCode native history.
+    // Never mutate MimoCode native history.
   }
 
   resolveSessionIdForConversation(conversation: Conversation | null): string | null {

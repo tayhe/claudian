@@ -52,7 +52,7 @@ export async function loadMimocodeSessionMessages(
   if (!rows) {
     return [createMimocodeHydrationDiagnosticMessage({
       databasePath,
-      reason: 'Could not read OpenCode session rows from SQLite.',
+      reason: 'Could not read MimoCode session rows from SQLite.',
       sessionId,
     })];
   }
@@ -142,7 +142,7 @@ function mapStoredMessage(
     return createMimocodeHydrationDiagnosticMessage({
       ...context,
       messageId: id,
-      reason: 'OpenCode message metadata is not valid JSON.',
+      reason: 'MimoCode message metadata is not valid JSON.',
     });
   }
   if (role !== 'user' && role !== 'assistant') {
@@ -269,8 +269,8 @@ function createMimocodeHydrationDiagnosticMessage(params: {
   sessionId?: string;
 }): ChatMessage {
   const detailLines = [
-    'Failed to hydrate OpenCode session.',
-    'provider: OpenCode',
+    'Failed to hydrate MimoCode session.',
+    'provider: MimoCode',
     ...(params.sessionId ? [`sessionId: ${params.sessionId}`] : []),
     ...(params.databasePath ? [`databasePath: ${params.databasePath}`] : []),
     ...(params.messageId ? [`messageId: ${params.messageId}`] : []),

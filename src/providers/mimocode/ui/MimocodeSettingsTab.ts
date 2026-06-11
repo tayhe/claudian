@@ -45,7 +45,7 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
     new Setting(container).setName('Setup').setHeading();
 
     new Setting(container)
-      .setName('Enable OpenCode')
+      .setName('Enable MimoCode')
       .setDesc('Launch `mimocode acp` as a provider.')
       .addToggle((toggle) =>
         toggle
@@ -59,7 +59,7 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
 
     const cliPathSetting = new Setting(container)
       .setName('CLI path')
-      .setDesc('Optional absolute path to the OpenCode CLI for this computer. Leave empty to use `mimocode` from PATH.');
+      .setDesc('Optional absolute path to the MimoCode CLI for this computer. Leave empty to use `mimocode` from PATH.');
 
     const validationEl = container.createDiv({
       cls: 'claudian-cli-path-validation claudian-setting-validation claudian-setting-validation-error claudian-hidden',
@@ -162,7 +162,7 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
 
     new Setting(container)
       .setName('Visible models')
-      .setDesc('Choose which OpenCode models appear in the chat selector. Filter by provider or type to search. The current session model stays pinned even if it is not selected here.');
+      .setDesc('Choose which MimoCode models appear in the chat selector. Filter by provider or type to search. The current session model stays pinned even if it is not selected here.');
 
     const pickerEl = container.createDiv({ cls: 'claudian-mimocode-model-picker' });
 
@@ -363,7 +363,7 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
         if (enriched && !enriched.isAvailable) {
           infoEl.createEl('div', {
             cls: 'claudian-mimocode-model-picker-selected-unavailable',
-            text: 'Not currently reported by OpenCode',
+            text: 'Not currently reported by MimoCode',
           });
         }
 
@@ -467,11 +467,11 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
         const emptyEl = listEl.createDiv({ cls: 'claudian-mimocode-model-picker-empty' });
         let emptyText = 'No models match your filter.';
         if (loadingModelCatalog) {
-          emptyText = 'Loading OpenCode model catalog...';
+          emptyText = 'Loading MimoCode model catalog...';
         } else if (modelCatalogLoadFailed) {
-          emptyText = 'Could not load the OpenCode model catalog. Check the CLI path and login state, then expand this section again.';
+          emptyText = 'Could not load the MimoCode model catalog. Check the CLI path and login state, then expand this section again.';
         } else if (enriched.length === 0) {
-          emptyText = 'Start OpenCode once to load its model catalog. Claudian will then let you pick visible models.';
+          emptyText = 'Start MimoCode once to load its model catalog. Claudian will then let you pick visible models.';
         }
         emptyEl.setText(emptyText);
         return;
@@ -514,7 +514,7 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
         if (!model.isAvailable) {
           badgeEl.classList.add('claudian-mimocode-model-picker-row-badge--unavailable');
           badgeEl.setText('Unavailable');
-          badgeEl.title = 'Configured model not currently reported by OpenCode';
+          badgeEl.title = 'Configured model not currently reported by MimoCode';
         }
 
         textEl.createDiv({
@@ -584,12 +584,12 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
     const commandsDesc = container.createDiv({ cls: 'claudian-sp-settings-desc' });
     commandsDesc.createEl('p', {
       cls: 'setting-item-description',
-      text: 'OpenCode can auto-detect vault-level Claude slash commands from .claude/commands/ and skills from .claude/skills/, .codex/skills/, and .agents/skills/. Manage those entries in the Claude or Codex settings tab. This setting only hides entries from the OpenCode dropdown.',
+      text: 'MimoCode can auto-detect vault-level Claude slash commands from .claude/commands/ and skills from .claude/skills/, .codex/skills/, and .agents/skills/. Manage those entries in the Claude or Codex settings tab. This setting only hides entries from the MimoCode dropdown.',
     });
 
     context.renderHiddenProviderCommandSetting(container, 'mimocode', {
       name: 'Hidden Commands and Skills',
-      desc: 'Hide specific OpenCode commands and skills from the dropdown. Enter names without the leading slash, one per line.',
+      desc: 'Hide specific MimoCode commands and skills from the dropdown. Enter names without the leading slash, one per line.',
       placeholder: 'compact\nreview\nfix',
     });
 
@@ -599,7 +599,7 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
       const subagentsDesc = container.createDiv({ cls: 'claudian-sp-settings-desc' });
       subagentsDesc.createEl('p', {
         cls: 'setting-item-description',
-        text: 'Manage vault-level OpenCode subagents from .mimocode/agent/ and legacy .mimocode/agents/. New entries are saved as subagent-only files and appear in the @mention menu.',
+        text: 'Manage vault-level MimoCode subagents from .mimocode/agent/ and legacy .mimocode/agents/. New entries are saved as subagent-only files and appear in the @mention menu.',
       });
 
       const subagentsContainer = container.createDiv({ cls: 'claudian-slash-commands-container' });
@@ -620,7 +620,7 @@ export const mimocodeSettingsTabRenderer: ProviderSettingsTabRenderer = {
       scope: 'provider:mimocode',
       heading: 'Environment',
       name: 'Environment Variables',
-      desc: 'Extra environment variables passed to OpenCode. `MIMOCODE_ENABLE_EXA=1` is enabled by default.',
+      desc: 'Extra environment variables passed to MimoCode. `MIMOCODE_ENABLE_EXA=1` is enabled by default.',
       placeholder: `${MIMOCODE_DEFAULT_ENVIRONMENT_VARIABLES}\nMIMOCODE_DB=/path/to/mimocode.db`,
       renderCustomContextLimits: (target) => context.renderCustomContextLimits(target, 'mimocode'),
     });

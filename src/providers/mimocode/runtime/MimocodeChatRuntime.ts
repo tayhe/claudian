@@ -346,13 +346,13 @@ export class MimocodeChatRuntime implements ChatRuntime {
       && (!expectedSessionId || this.sessionInvalidated);
 
     if (!(await this.ensureReady())) {
-      yield { type: 'error', content: 'Failed to start OpenCode. Check the CLI path and login state.' };
+      yield { type: 'error', content: 'Failed to start MimoCode. Check the CLI path and login state.' };
       yield { type: 'done' };
       return;
     }
 
     if (!this.connection) {
-      yield { type: 'error', content: 'OpenCode runtime is not ready.' };
+      yield { type: 'error', content: 'MimoCode runtime is not ready.' };
       yield { type: 'done' };
       return;
     }
@@ -365,7 +365,7 @@ export class MimocodeChatRuntime implements ChatRuntime {
     if (!this.sessionId) {
       const sessionId = await this.createSession(cwd);
       if (!sessionId) {
-        yield { type: 'error', content: 'Failed to create an OpenCode session.' };
+        yield { type: 'error', content: 'Failed to create an MimoCode session.' };
         yield { type: 'done' };
         return;
       }
@@ -1305,7 +1305,7 @@ export class MimocodeChatRuntime implements ChatRuntime {
   }
 
   private formatRuntimeError(error: unknown): string {
-    const baseMessage = error instanceof Error ? error.message : 'OpenCode request failed';
+    const baseMessage = error instanceof Error ? error.message : 'MimoCode request failed';
     const stderr = this.process?.getStderrSnapshot();
     return stderr ? `${baseMessage}\n\n${stderr}` : baseMessage;
   }
@@ -1347,18 +1347,18 @@ function buildMimocodePermissionPresentation(
     case 'bash':
       return {
         decisionReason: 'Command execution permission required',
-        description: 'OpenCode wants to run a shell command.',
+        description: 'MimoCode wants to run a shell command.',
         toolName: 'bash',
       };
     case 'codesearch':
       return {
-        description: 'OpenCode wants to search indexed code outside the active buffer.',
+        description: 'MimoCode wants to search indexed code outside the active buffer.',
         toolName: 'codesearch',
       };
     case 'doom_loop': {
       const repeatedTool = typeof input.tool === 'string' ? input.tool.trim() : '';
       return {
-        decisionReason: 'OpenCode detected repeated identical tool calls',
+        decisionReason: 'MimoCode detected repeated identical tool calls',
         description: repeatedTool
           ? `Allow another repeated \`${repeatedTool}\` call.`
           : 'Allow another repeated tool call.',
@@ -1370,8 +1370,8 @@ function buildMimocodePermissionPresentation(
         ...(blockedPath ? { blockedPath } : {}),
         decisionReason: 'File write permission required',
         description: blockedPath
-          ? 'OpenCode wants to modify this file.'
-          : 'OpenCode wants to apply file changes.',
+          ? 'MimoCode wants to modify this file.'
+          : 'MimoCode wants to apply file changes.',
         toolName: 'edit',
       };
     case 'external_directory':
@@ -1379,66 +1379,66 @@ function buildMimocodePermissionPresentation(
         ...(blockedPath ? { blockedPath } : {}),
         decisionReason: 'Path is outside the session working directory',
         description: blockedPath
-          ? 'OpenCode wants to access a path outside the working directory.'
-          : 'OpenCode wants to access files outside the working directory.',
+          ? 'MimoCode wants to access a path outside the working directory.'
+          : 'MimoCode wants to access files outside the working directory.',
         toolName: 'External Directory',
       };
     case 'glob':
       return {
-        description: 'OpenCode wants to scan file paths with a glob pattern.',
+        description: 'MimoCode wants to scan file paths with a glob pattern.',
         toolName: 'glob',
       };
     case 'grep':
       return {
-        description: 'OpenCode wants to search file contents with a pattern.',
+        description: 'MimoCode wants to search file contents with a pattern.',
         toolName: 'grep',
       };
     case 'lsp':
       return {
-        description: 'OpenCode wants to query language server data.',
+        description: 'MimoCode wants to query language server data.',
         toolName: 'lsp',
       };
     case 'plan_enter':
       return {
-        description: 'OpenCode wants to switch this session into planning mode.',
+        description: 'MimoCode wants to switch this session into planning mode.',
         toolName: 'Enter Plan Mode',
       };
     case 'plan_exit':
       return {
-        description: 'OpenCode wants to leave planning mode and resume implementation.',
+        description: 'MimoCode wants to leave planning mode and resume implementation.',
         toolName: 'Exit Plan Mode',
       };
     case 'question':
       return {
-        description: 'OpenCode wants to ask you a direct question before continuing.',
+        description: 'MimoCode wants to ask you a direct question before continuing.',
         toolName: 'Ask Question',
       };
     case 'read':
       return {
         ...(blockedPath ? { blockedPath } : {}),
         description: blockedPath
-          ? 'OpenCode wants to read this path.'
-          : 'OpenCode wants to read project files.',
+          ? 'MimoCode wants to read this path.'
+          : 'MimoCode wants to read project files.',
         toolName: 'read',
       };
     case 'skill':
       return {
-        description: 'OpenCode wants to load a skill into the current session.',
+        description: 'MimoCode wants to load a skill into the current session.',
         toolName: 'skill',
       };
     case 'todowrite':
       return {
-        description: 'OpenCode wants to update the shared task list.',
+        description: 'MimoCode wants to update the shared task list.',
         toolName: 'todowrite',
       };
     case 'webfetch':
       return {
-        description: 'OpenCode wants to fetch content from a URL.',
+        description: 'MimoCode wants to fetch content from a URL.',
         toolName: 'webfetch',
       };
     case 'websearch':
       return {
-        description: 'OpenCode wants to search the web.',
+        description: 'MimoCode wants to search the web.',
         toolName: 'websearch',
       };
     case 'workflow_tool_approval': {
@@ -1455,8 +1455,8 @@ function buildMimocodePermissionPresentation(
       return {
         ...(blockedPath ? { blockedPath } : {}),
         description: blockedPath
-          ? `OpenCode wants permission to use ${formatPermissionLabel(permissionId)} on this path.`
-          : `OpenCode wants permission to use ${formatPermissionLabel(permissionId)}.`,
+          ? `MimoCode wants permission to use ${formatPermissionLabel(permissionId)} on this path.`
+          : `MimoCode wants permission to use ${formatPermissionLabel(permissionId)}.`,
         toolName: formatPermissionLabel(permissionId),
       };
   }

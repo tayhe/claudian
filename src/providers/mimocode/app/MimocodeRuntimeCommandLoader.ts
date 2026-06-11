@@ -43,7 +43,7 @@ export class MimocodeRuntimeCommandLoader implements ProviderRuntimeCommandLoade
         runtime.syncConversationState(context.conversation, context.externalContextPaths);
       } else if (shouldWarmBlankSession) {
         // Blank-tab warmup uses an isolated in-memory session to fetch metadata
-        // without binding a persisted OpenCode session to the tab.
+        // without binding a persisted MimoCode session to the tab.
         runtime.syncConversationState({
           providerState: { databasePath: MIMOCODE_METADATA_WARMUP_DB },
           sessionId: null,
