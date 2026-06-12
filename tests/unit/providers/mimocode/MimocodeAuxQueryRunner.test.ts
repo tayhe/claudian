@@ -228,7 +228,7 @@ describe('MimocodeAuxQueryRunner', () => {
     expect(MockAcpJsonRpcTransport).toHaveBeenCalledTimes(2);
   });
 
-  it('uses an explicit encoded OpenCode model override from the active chat tab', async () => {
+  it('uses an explicit encoded MimoCode model override from the active chat tab', async () => {
     mockConnection.newSession.mockResolvedValue({
       models: {
         availableModels: [
@@ -346,7 +346,7 @@ describe('MimocodeAuxQueryRunner', () => {
     (runner as any).sessionCwds.set('session-1', '/tmp/claudian-test-vault');
 
     expect(() => (runner as any).resolveSessionPath('session-1', '/tmp/outside.md')).toThrow(
-      'OpenCode aux read access is limited to the current workspace.',
+      'MimoCode aux read access is limited to the current workspace.',
     );
     expect((runner as any).resolveSessionPath('session-1', '/tmp/claudian-test-vault/notes/today.md')).toBe(
       '/tmp/claudian-test-vault/notes/today.md',

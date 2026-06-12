@@ -27,7 +27,7 @@ describe('buildMimocodePromptText', () => {
     expect(prompt).toContain('<browser_selection source="browser:https://example.com" title="Example" url="https://example.com">');
   });
 
-  it('does not auto-attach external context folders to the OpenCode prompt', () => {
+  it('does not auto-attach external context folders to the MimoCode prompt', () => {
     const prompt = buildMimocodePromptText({
       externalContextPaths: ['/tmp/project'],
       text: 'Summarize this',

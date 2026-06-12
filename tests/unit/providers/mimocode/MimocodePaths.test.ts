@@ -9,7 +9,7 @@ import {
 } from '../../../../src/providers/mimocode/runtime/MimocodePaths';
 
 describe('MimocodePaths', () => {
-  it('prefers XDG data directories for OpenCode data', () => {
+  it('prefers XDG data directories for MimoCode data', () => {
     expect(resolveMimocodeDataDir({
       HOME: '/home/tester',
       XDG_DATA_HOME: '/tmp/xdg-data',

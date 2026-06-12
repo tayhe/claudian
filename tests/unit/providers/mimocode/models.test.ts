@@ -14,7 +14,7 @@
 } from '../../../../src/providers/mimocode/models';
 import { mimocodeChatUIConfig } from '../../../../src/providers/mimocode/ui/MimocodeChatUIConfig';
 
-describe('OpenCode model identity', () => {
+describe('MimoCode model identity', () => {
   it('namespaces provider-owned model ids for the shared selector', () => {
     expect(encodeMimocodeModelId('anthropic/claude-sonnet-4')).toBe('mimocode:anthropic/claude-sonnet-4');
     expect(decodeMimocodeModelId('mimocode:anthropic/claude-sonnet-4')).toBe('anthropic/claude-sonnet-4');
@@ -24,7 +24,7 @@ describe('OpenCode model identity', () => {
   });
 });
 
-describe('OpenCode base model derivation', () => {
+describe('MimoCode base model derivation', () => {
   const discoveredModels = [
     { label: 'Anthropic/Claude Sonnet 4', rawId: 'anthropic/claude-sonnet-4' },
     { label: 'Anthropic/Claude Sonnet 4 (high)', rawId: 'anthropic/claude-sonnet-4/high' },
@@ -103,7 +103,7 @@ describe('OpenCode base model derivation', () => {
 });
 
 describe('mimocodeChatUIConfig', () => {
-  it('keeps visible OpenCode model order stable and appends saved variant selections only when absent', () => {
+  it('keeps visible MimoCode model order stable and appends saved variant selections only when absent', () => {
     const options = mimocodeChatUIConfig.getModelOptions({
       model: 'haiku',
       providerConfigs: {
@@ -235,7 +235,7 @@ describe('mimocodeChatUIConfig', () => {
   });
 });
 
-describe('OpenCode discovered model grouping', () => {
+describe('MimoCode discovered model grouping', () => {
   it('splits provider and model labels for grouped picker rendering', () => {
     expect(splitMimocodeModelLabel('Google/Gemini 2.5 Flash')).toEqual({
       modelLabel: 'Gemini 2.5 Flash',

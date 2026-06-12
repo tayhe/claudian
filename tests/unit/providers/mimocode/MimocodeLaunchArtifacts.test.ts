@@ -12,7 +12,7 @@ import {
 } from '../../../../src/providers/mimocode/runtime/MimocodeLaunchArtifacts';
 
 describe('buildMimocodeManagedConfig', () => {
-  it('pins OpenCode build, YOLO, safe, and plan prompts to the managed prompt file', () => {
+  it('pins MimoCode build, YOLO, safe, and plan prompts to the managed prompt file', () => {
     expect(buildMimocodeManagedConfig({}, '/vault/.claudian/mimocode/system.md', 'Yishen')).toEqual({
       $schema: 'https://mimocode.ai/config.json',
       agent: {
@@ -243,7 +243,7 @@ describe('prepareMimocodeLaunchArtifacts', () => {
     expect(first.launchKey).toBe(second.launchKey);
   });
 
-  it('creates the resolved OpenCode database directory before launch', async () => {
+  it('creates the resolved MimoCode database directory before launch', async () => {
     const tmpRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'claudian-mimocode-artifacts-'));
     const xdgDataHome = path.join(tmpRoot, 'xdg-data');
     const databaseDir = path.join(xdgDataHome, 'mimocode');

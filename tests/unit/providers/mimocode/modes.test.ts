@@ -13,7 +13,7 @@
 } from '../../../../src/providers/mimocode/modes';
 import { mimocodeChatUIConfig } from '../../../../src/providers/mimocode/ui/MimocodeChatUIConfig';
 
-describe('OpenCode mode settings', () => {
+describe('MimoCode mode settings', () => {
   it('normalizes duplicate/invalid mode entries', () => {
     expect(normalizeMimocodeAvailableModes([
       { id: 'build', name: 'Build' },
@@ -49,13 +49,13 @@ describe('OpenCode mode settings', () => {
     expect(normalizeManagedMimocodeSelectedMode(MIMOCODE_BUILD_MODE_ID)).toBe(MIMOCODE_YOLO_MODE_ID);
   });
 
-  it('maps shared permission modes onto managed OpenCode modes', () => {
+  it('maps shared permission modes onto managed MimoCode modes', () => {
     expect(resolveMimocodeModeForPermissionMode('yolo')).toBe(MIMOCODE_YOLO_MODE_ID);
     expect(resolveMimocodeModeForPermissionMode('normal')).toBe(MIMOCODE_SAFE_MODE_ID);
     expect(resolveMimocodeModeForPermissionMode('plan')).toBe('plan');
   });
 
-  it('maps managed OpenCode modes back to shared permission modes', () => {
+  it('maps managed MimoCode modes back to shared permission modes', () => {
     expect(resolvePermissionModeForManagedMimocodeMode(MIMOCODE_BUILD_MODE_ID)).toBe('yolo');
     expect(resolvePermissionModeForManagedMimocodeMode(MIMOCODE_YOLO_MODE_ID)).toBe('yolo');
     expect(resolvePermissionModeForManagedMimocodeMode(MIMOCODE_SAFE_MODE_ID)).toBe('normal');
@@ -89,7 +89,7 @@ describe('mimocodeChatUIConfig permission mode wiring', () => {
     });
   });
 
-  it('derives shared permission mode from the saved managed OpenCode mode', () => {
+  it('derives shared permission mode from the saved managed MimoCode mode', () => {
     expect(mimocodeChatUIConfig.resolvePermissionMode?.({
       providerConfigs: {
         mimocode: {
@@ -123,7 +123,7 @@ describe('mimocodeChatUIConfig permission mode wiring', () => {
     })).toBe('plan');
   });
 
-  it('maps shared permission mode changes back into managed OpenCode modes', () => {
+  it('maps shared permission mode changes back into managed MimoCode modes', () => {
     const settings: Record<string, unknown> = {
       permissionMode: 'yolo',
       providerConfigs: {

@@ -16,7 +16,7 @@ import {
   updateMimocodeProviderSettings,
 } from '../../../../src/providers/mimocode/settings';
 
-describe('OpenCode settings normalization', () => {
+describe('MimoCode settings normalization', () => {
   const discoveredModels = [
     { label: 'Anthropic/Claude Sonnet 4', rawId: 'anthropic/claude-sonnet-4' },
     { label: 'Anthropic/Claude Sonnet 4 (high)', rawId: 'anthropic/claude-sonnet-4/high' },
@@ -155,7 +155,7 @@ describe('OpenCode settings normalization', () => {
     expect((settings.providerConfigs as Record<string, any>).mimocode.discoveredModels).toBeUndefined();
   });
 
-  it('falls back active and saved OpenCode selections when the current model is removed from visible models', () => {
+  it('falls back active and saved MimoCode selections when the current model is removed from visible models', () => {
     const settings: Record<string, unknown> = {
       effortLevel: 'high',
       model: 'mimocode:google/gemini-2.5-pro',
@@ -196,7 +196,7 @@ describe('OpenCode settings normalization', () => {
     expect(settings.titleGenerationModel).toBe('mimocode:openai/gpt-5');
   });
 
-  it('clears the OpenCode title model when all visible models are removed', () => {
+  it('clears the MimoCode title model when all visible models are removed', () => {
     const settings: Record<string, unknown> = {
       providerConfigs: {
         mimocode: {
@@ -251,7 +251,7 @@ describe('OpenCode settings normalization', () => {
     expect((settings.providerConfigs as Record<string, any>).mimocode.discoveredModels).toBeUndefined();
   });
 
-  it('persists thinking options only for visible or selected OpenCode models', () => {
+  it('persists thinking options only for visible or selected MimoCode models', () => {
     const settings: Record<string, unknown> = {
       model: 'mimocode:google/gemini-2.5-pro',
       providerConfigs: {
@@ -350,7 +350,7 @@ describe('OpenCode settings normalization', () => {
     });
   });
 
-  it('normalizes saved custom OpenCode modes back to the managed YOLO mode', () => {
+  it('normalizes saved custom MimoCode modes back to the managed YOLO mode', () => {
     expect(getMimocodeProviderSettings({
       providerConfigs: {
         mimocode: {

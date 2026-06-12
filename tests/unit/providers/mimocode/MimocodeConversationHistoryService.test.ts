@@ -97,7 +97,7 @@ function createConversation(sessionId: string, databasePath: string): Conversati
     providerId: 'mimocode',
     providerState: { databasePath },
     sessionId,
-    title: 'OpenCode conversation',
+    title: 'MimoCode conversation',
     updatedAt: 1,
   };
 }

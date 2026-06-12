@@ -56,7 +56,7 @@ describe('mimocodeSettingsReconciler.handleEnvironmentChange', () => {
 });
 
 describe('mimocodeSettingsReconciler.reconcileModelWithEnvironment', () => {
-  it('invalidates persisted OpenCode session state when the runtime database/config env changes', () => {
+  it('invalidates persisted MimoCode session state when the runtime database/config env changes', () => {
     const settings: Record<string, unknown> = {
       providerConfigs: {
         mimocode: {

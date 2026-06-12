@@ -469,14 +469,14 @@ describe('MimocodeSettingsTab', () => {
       'mimocode',
       expect.objectContaining({
         name: 'Hidden Commands and Skills',
-        desc: 'Hide specific OpenCode commands and skills from the dropdown. Enter names without the leading slash, one per line.',
+        desc: 'Hide specific MimoCode commands and skills from the dropdown. Enter names without the leading slash, one per line.',
       }),
     );
 
     expect(createdElements).toContainEqual({
       cls: 'setting-item-description',
       tag: 'p',
-      text: 'OpenCode can auto-detect vault-level Claude slash commands from .claude/commands/ and skills from .claude/skills/, .codex/skills/, and .agents/skills/. Manage those entries in the Claude or Codex settings tab. This setting only hides entries from the OpenCode dropdown.',
+      text: 'MimoCode can auto-detect vault-level Claude slash commands from .claude/commands/ and skills from .claude/skills/, .codex/skills/, and .agents/skills/. Manage those entries in the Claude or Codex settings tab. This setting only hides entries from the MimoCode dropdown.',
     });
   });
 
@@ -489,7 +489,7 @@ describe('MimocodeSettingsTab', () => {
     expect(createdElements).toContainEqual({
       cls: 'setting-item-description',
       tag: 'p',
-      text: 'Manage vault-level OpenCode subagents from .mimocode/agent/ and legacy .mimocode/agents/. New entries are saved as subagent-only files and appear in the @mention menu.',
+      text: 'Manage vault-level MimoCode subagents from .mimocode/agent/ and legacy .mimocode/agents/. New entries are saved as subagent-only files and appear in the @mention menu.',
     });
 
     expect(mockCreatedAgentSettings).toHaveLength(1);
@@ -519,7 +519,7 @@ describe('MimocodeSettingsTab', () => {
     }));
   });
 
-  it('loads the OpenCode model catalog when the model browser is expanded', async () => {
+  it('loads the MimoCode model catalog when the model browser is expanded', async () => {
     mockRuntimeEnsureReady.mockImplementation(async (plugin: any) => {
       plugin.settings.providerConfigs.mimocode.discoveredModels = [
         { label: 'DeepSeek/DeepSeek V4 Pro', rawId: 'deepseek/deepseek-v4-pro' },
@@ -562,7 +562,7 @@ describe('MimocodeSettingsTab', () => {
     expect(context.refreshModelSelectors).toHaveBeenCalledTimes(1);
   });
 
-  it('loads the OpenCode model catalog immediately when a fresh picker starts expanded', async () => {
+  it('loads the MimoCode model catalog immediately when a fresh picker starts expanded', async () => {
     mockRuntimeEnsureReady.mockImplementation(async (plugin: any) => {
       plugin.settings.providerConfigs.mimocode.discoveredModels = [
         { label: 'DeepSeek/DeepSeek V4 Pro', rawId: 'deepseek/deepseek-v4-pro' },

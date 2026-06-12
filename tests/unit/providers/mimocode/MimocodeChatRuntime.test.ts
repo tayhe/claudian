@@ -256,7 +256,7 @@ describe('MimocodeChatRuntime', () => {
     expect(approvalCallback).toHaveBeenCalledWith(
       'External Directory',
       { filepath: '/tmp/outside', parentDir: '/tmp' },
-      'OpenCode wants to access a path outside the working directory.',
+      'MimoCode wants to access a path outside the working directory.',
       {
         blockedPath: '/tmp/outside',
         decisionOptions: [
@@ -308,7 +308,7 @@ describe('MimocodeChatRuntime', () => {
     });
   });
 
-  it('syncs OpenCode session modes into provider settings without clobbering an explicit user choice', async () => {
+  it('syncs MimoCode session modes into provider settings without clobbering an explicit user choice', async () => {
     const refreshModelSelector = jest.fn();
     const plugin = createMockPlugin({
       getAllViews: jest.fn().mockReturnValue([{ refreshModelSelector }]),
@@ -348,7 +348,7 @@ describe('MimocodeChatRuntime', () => {
     expect(refreshModelSelector).toHaveBeenCalledTimes(1);
   });
 
-  it('seeds the OpenCode selected mode when no explicit mode has been saved yet', async () => {
+  it('seeds the MimoCode selected mode when no explicit mode has been saved yet', async () => {
     const plugin = createMockPlugin({
       settings: {
         providerConfigs: {
@@ -368,7 +368,7 @@ describe('MimocodeChatRuntime', () => {
     expect(plugin.settings.providerConfigs.mimocode.selectedMode).toBe(MIMOCODE_YOLO_MODE_ID);
   });
 
-  it('defaults OpenCode mode selection to the managed YOLO mode before ACP mode discovery finishes', () => {
+  it('defaults MimoCode mode selection to the managed YOLO mode before ACP mode discovery finishes', () => {
     const plugin = createMockPlugin({
       settings: {
         permissionMode: 'yolo',
@@ -404,7 +404,7 @@ describe('MimocodeChatRuntime', () => {
     expect((runtime as any).resolveSelectedModeId()).toBe(MIMOCODE_YOLO_MODE_ID);
   });
 
-  it('prefers managed YOLO/safe/plan modes over auxiliary OpenCode primary modes for the main toolbar', () => {
+  it('prefers managed YOLO/safe/plan modes over auxiliary MimoCode primary modes for the main toolbar', () => {
     const plugin = createMockPlugin({
       settings: {
         permissionMode: 'yolo',
@@ -427,7 +427,7 @@ describe('MimocodeChatRuntime', () => {
     expect((runtime as any).resolveSelectedModeId()).toBe(MIMOCODE_YOLO_MODE_ID);
   });
 
-  it('maps shared safe mode onto the managed OpenCode safe agent', () => {
+  it('maps shared safe mode onto the managed MimoCode safe agent', () => {
     const plugin = createMockPlugin({
       settings: {
         permissionMode: 'normal',
@@ -449,7 +449,7 @@ describe('MimocodeChatRuntime', () => {
     expect((runtime as any).resolveSelectedModeId()).toBe(MIMOCODE_SAFE_MODE_ID);
   });
 
-  it('syncs managed OpenCode safe mode back through the permission-mode callback', async () => {
+  it('syncs managed MimoCode safe mode back through the permission-mode callback', async () => {
     const plugin = createMockPlugin({
       settings: {
         providerConfigs: {
@@ -588,7 +588,7 @@ describe('MimocodeChatRuntime', () => {
     expect(refreshModelSelector).not.toHaveBeenCalled();
   });
 
-  it('syncs detached ACP thought-level options into OpenCode provider state', async () => {
+  it('syncs detached ACP thought-level options into MimoCode provider state', async () => {
     const refreshModelSelector = jest.fn();
     const plugin = createMockPlugin({
       getAllViews: jest.fn().mockReturnValue([{ refreshModelSelector }]),
@@ -723,7 +723,7 @@ describe('MimocodeChatRuntime', () => {
     expect(plugin.saveSettings).toHaveBeenCalledTimes(1);
   });
 
-  it('applies selected OpenCode effort through the detached ACP effort option', async () => {
+  it('applies selected MimoCode effort through the detached ACP effort option', async () => {
     const plugin = createMockPlugin({
       settings: {
         effortLevel: 'high',
@@ -775,7 +775,7 @@ describe('MimocodeChatRuntime', () => {
     });
   });
 
-  it('exposes the active display model for auxiliary OpenCode tasks', () => {
+  it('exposes the active display model for auxiliary MimoCode tasks', () => {
     const plugin = createMockPlugin({
       settings: {
         effortLevel: 'high',

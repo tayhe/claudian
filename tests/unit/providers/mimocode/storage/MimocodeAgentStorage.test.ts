@@ -155,7 +155,7 @@ describe('serializeMimocodeAgentMarkdown', () => {
 
 describe('MimocodeAgentStorage', () => {
   describe('loadAll', () => {
-    it('loads markdown agents recursively from both supported OpenCode roots', async () => {
+    it('loads markdown agents recursively from both supported MimoCode roots', async () => {
       const adapter = createMockAdapter({
         '.mimocode/agent/review.md': BASIC_MARKDOWN,
         '.mimocode/agents/nested/explorer.md': `---
@@ -245,7 +245,7 @@ Trace the bug carefully.
   });
 
   describe('save', () => {
-    it('writes new nested agents to the singular OpenCode root', async () => {
+    it('writes new nested agents to the singular MimoCode root', async () => {
       const adapter = createMockAdapter({});
       const storage = new MimocodeAgentStorage(adapter);
 
@@ -351,7 +351,7 @@ Trace the bug carefully.
 });
 
 describe('Mimocode agent persistence keys', () => {
-  it('round-trips nested file identity for the singular OpenCode root', () => {
+  it('round-trips nested file identity for the singular MimoCode root', () => {
     const key = createMimocodeAgentPersistenceKey({ filePath: '.mimocode/agent/nested/reviewer.md' });
 
     expect(parseMimocodeAgentPersistenceKey(key)).toEqual({ filePath: '.mimocode/agent/nested/reviewer.md' });

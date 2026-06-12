@@ -10,7 +10,7 @@ import {
 } from '../../../../src/providers/mimocode/history/MimocodeHistoryStore';
 
 describe('mapMimocodeMessages', () => {
-  it('maps stored OpenCode messages into Claudian chat messages', () => {
+  it('maps stored MimoCode messages into Claudian chat messages', () => {
     const messages = mapMimocodeMessages([
       {
         info: {
@@ -165,7 +165,7 @@ describe('mapMimocodeMessages', () => {
     ]);
   });
 
-  it('merges adjacent assistant fragments from one OpenCode turn', () => {
+  it('merges adjacent assistant fragments from one MimoCode turn', () => {
     const messages = mapMimocodeMessages([
       {
         info: {
@@ -297,10 +297,10 @@ describe('mapMimocodeMessages', () => {
     expect(messages).toEqual([
       expect.objectContaining({
         content: [
-          'Failed to hydrate OpenCode session.',
-          'provider: OpenCode',
+          'Failed to hydrate MimoCode session.',
+          'provider: MimoCode',
           'messageId: msg-bad',
-          'reason: OpenCode message metadata is not valid JSON.',
+          'reason: MimoCode message metadata is not valid JSON.',
         ].join('\n'),
         id: 'mimocode-hydration-error-message-msg-bad',
         role: 'assistant',
