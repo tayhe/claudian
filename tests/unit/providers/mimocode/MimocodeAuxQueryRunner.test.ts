@@ -1,5 +1,6 @@
-﻿import '@/providers';
+import '@/providers';
 
+import * as path from 'node:path';
 import { AcpClientConnection, AcpJsonRpcTransport, AcpSubprocess } from '@/providers/acp';
 import { MimocodeAuxQueryRunner } from '@/providers/mimocode/runtime/MimocodeAuxQueryRunner';
 import { prepareMimocodeLaunchArtifacts } from '@/providers/mimocode/runtime/MimocodeLaunchArtifacts';
@@ -343,13 +344,13 @@ describe('MimocodeAuxQueryRunner', () => {
       allowReadTextFile: true,
     });
 
-    (runner as any).sessionCwds.set('session-1', '/tmp/claudian-test-vault');
+    (runner as any).sessionCwds.set('session-1', path.resolve('/tmp', 'claudian-test-vault'));
 
-    expect(() => (runner as any).resolveSessionPath('session-1', '/tmp/outside.md')).toThrow(
+    expect(() => (runner as any).resolveSessionPath('session-1', path.resolve('/tmp', 'outside.md'))).toThrow(
       'MimoCode aux read access is limited to the current workspace.',
     );
-    expect((runner as any).resolveSessionPath('session-1', '/tmp/claudian-test-vault/notes/today.md')).toBe(
-      '/tmp/claudian-test-vault/notes/today.md',
+    expect((runner as any).resolveSessionPath('session-1', path.resolve('/tmp', 'claudian-test-vault', 'notes', 'today.md'))).toBe(
+      path.resolve('/tmp', 'claudian-test-vault', 'notes', 'today.md'),
     );
   });
 });

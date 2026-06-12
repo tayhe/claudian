@@ -1,4 +1,4 @@
-﻿import * as fs from 'node:fs/promises';
+import * as fs from 'node:fs/promises';
 import * as os from 'node:os';
 import * as path from 'node:path';
 
@@ -173,7 +173,7 @@ describe('prepareMimocodeLaunchArtifacts', () => {
 
     expect(result.configPath).toBe(path.join(tmpRoot, '.claudian', 'mimocode', 'config.json'));
     expect(result.systemPromptPath).toBe(path.join(tmpRoot, '.claudian', 'mimocode', 'system.md'));
-    expect(result.configContent).toContain(`"prompt": "{file:${result.systemPromptPath}}"`);
+    expect(result.configContent).toContain(`"prompt": "{file:${JSON.stringify(result.systemPromptPath).slice(1, -1)}}"`);
     const generatedConfig = JSON.parse(await fs.readFile(result.configPath, 'utf8'));
     expect(generatedConfig).toMatchObject({
       default_agent: 'build',
