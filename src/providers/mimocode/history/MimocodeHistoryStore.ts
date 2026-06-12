@@ -1,4 +1,3 @@
-﻿import { spawnSync } from 'node:child_process';
 import * as fs from 'node:fs';
 
 import { extractResolvedAnswersFromResultText } from '../../../core/tools/toolInput';
@@ -13,8 +12,12 @@ import {
 } from '../normalization/mimocodeToolNormalization';
 import { resolveExistingMimocodeDatabasePath } from '../runtime/MimocodePaths';
 import type { MimocodeProviderState } from '../types';
+import {
+  loadMimocodeSessionRows,
+  type StoredRow,
+} from './MimocodeSqliteReader';
 
-type StoredRow = Record<string, unknown>;
+export { MIMOCODE_MESSAGE_ROW_SQL } from './MimocodeSqliteReader';
 
 interface StoredMessage {
   info: StoredRow;
@@ -26,17 +29,6 @@ interface MimocodeHydrationDiagnosticContext {
   sessionId?: string;
 }
 
-interface SqliteModule {
-  DatabaseSync: new (location: string, options?: Record<string, unknown>) => {
-    close(): void;
-    prepare(sql: string): {
-      all(...params: unknown[]): StoredRow[];
-    };
-  };
-}
-
-export const MIMOCODE_MESSAGE_ROW_SQL = buildMimocodeMessageRowsSql('?');
-const MIMOCODE_PART_ROW_SQL = buildMimocodePartRowsSql('?');
 const MIMOCODE_HYDRATION_DIAGNOSTIC_ID_PREFIX = 'mimocode-hydration-error';
 
 export async function loadMimocodeSessionMessages(
@@ -477,132 +469,4 @@ function getNestedNumber(
     current = current[key];
   }
   return getNumber(current);
-}
-
-async function loadSqliteModule(): Promise<SqliteModule | null> {
-  try {
-    return await import('node:sqlite');
-  } catch {
-    return null;
-  }
-}
-
-interface StoredSessionRows {
-  messageRows: StoredRow[];
-  partRows: StoredRow[];
-}
-
-async function loadMimocodeSessionRows(
-  databasePath: string,
-  sessionId: string,
-): Promise<StoredSessionRows | null> {
-  const viaNodeSqlite = await loadSessionRowsWithNodeSqlite(databasePath, sessionId);
-  if (viaNodeSqlite) {
-    return viaNodeSqlite;
-  }
-
-  return loadSessionRowsWithSqliteCli(databasePath, sessionId);
-}
-
-async function loadSessionRowsWithNodeSqlite(
-  databasePath: string,
-  sessionId: string,
-): Promise<StoredSessionRows | null> {
-  const sqlite = await loadSqliteModule();
-  if (!sqlite) {
-    return null;
-  }
-
-  let db: InstanceType<SqliteModule['DatabaseSync']> | null = null;
-  try {
-    db = new sqlite.DatabaseSync(databasePath, { readonly: true });
-    const messageRows = db.prepare(MIMOCODE_MESSAGE_ROW_SQL).all(sessionId);
-    const partRows = db.prepare(MIMOCODE_PART_ROW_SQL).all(sessionId);
-    return { messageRows, partRows };
-  } catch {
-    return null;
-  } finally {
-    db?.close();
-  }
-}
-
-function loadSessionRowsWithSqliteCli(
-  databasePath: string,
-  sessionId: string,
-): StoredSessionRows | null {
-  const escapedSessionId = escapeSqlLiteral(sessionId);
-  const messageRows = runSqlite3JsonQuery(
-    databasePath,
-    buildMimocodeMessageRowsSql(`'${escapedSessionId}'`),
-  );
-  const partRows = runSqlite3JsonQuery(
-    databasePath,
-    buildMimocodePartRowsSql(`'${escapedSessionId}'`),
-  );
-
-  if (!messageRows || !partRows) {
-    return null;
-  }
-
-  return { messageRows, partRows };
-}
-
-function runSqlite3JsonQuery(
-  databasePath: string,
-  sql: string,
-): StoredRow[] | null {
-  const result = spawnSync(
-    'sqlite3',
-    ['-json', databasePath, sql],
-    {
-      encoding: 'utf8',
-    },
-  );
-
-  if (result.error || result.status !== 0) {
-    return null;
-  }
-
-  try {
-    const parsed = JSON.parse(result.stdout || '[]') as unknown;
-    return Array.isArray(parsed)
-      ? parsed.filter((row): row is StoredRow => isPlainObject(row))
-      : null;
-  } catch {
-    return null;
-  }
-}
-
-function escapeSqlLiteral(value: string): string {
-  return value.replaceAll('\'', '\'\'');
-}
-
-function buildMimocodeMessageRowsSql(sessionIdExpression: string): string {
-  return `
-with message_json as (
-  select
-    id,
-    time_created,
-    data,
-    json_valid(data) as data_valid
-  from message
-  where session_id = ${sessionIdExpression}
-)
-select
-  id,
-  time_created,
-  data_valid,
-  case when data_valid then json_extract(data, '$.role') end as role,
-  case when data_valid then json_extract(data, '$.time.created') end as data_time_created,
-  case when data_valid then json_extract(data, '$.time.completed') end as data_time_completed
-from message_json
-order by time_created asc, id asc;`.trim();
-}
-
-function buildMimocodePartRowsSql(sessionIdExpression: string): string {
-  return `
-select id, message_id, data
-from part
-where session_id = ${sessionIdExpression}
-order by message_id asc, id asc;`.trim();
 }
